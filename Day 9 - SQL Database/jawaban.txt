@@ -1,1 +1,99 @@
-1.buat Database    MariaDB [(none)]> create database library;    MariaDB [(none)]> use library;2.create tabel user, categories, books    MariaDB [library]> CREATE TABLE users (        -> id INT AUTO_INCREMENT PRIMARY KEY,        -> name varchar(255),        -> email varchar(255),        -> password varchar(255));    MariaDB [library]> CREATE TABLE categories (        -> id INT AUTO_INCREMENT PRIMARY KEY,        -> name varchar(255));    MariaDB [library]> create table books(        -> id INT AUTO_INCREMENT PRIMARY KEY,        -> title varchar(255),        -> summary text,        -> stock int,        -> category_id int,        -> FOREIGN KEY (category_id) REFERENCES categories(id));3.memasukan data pada table    //tabel users        MariaDB [library]> insert into users (name,email,password)        -> values ('Fadilah Amri','john@doe.com','john123'),        -> ('jane doe','jane@doe.com','jenita123');       //tabel categories        MariaDB [library]> insert into categories (name)            -> values ('novel'),            -> ('manga'),            -> ('comic'),            -> ('history'),            -> ('IT');    //tabel books        MariaDB [library]> insert into books (title,summary,stock,category_id)            -> value ('One piece', 'The series focuses on Monkey D Luffy,a young man made of rubber', 50, 2),            -> ('laskar pelangi', 'Belitung is known for its richness in tin, making it one of Indonesia richest islands', 25, 1),            -> ('your name', 'Mitsuha Miyamizu, a high school girl living in the fictional town of Itomori in Gifu Prefectures', 15, 2);4.mengambil Data dari Database    //mengambil data user KECUALI password nya    MariaDB [library]> select name, email from users;    +--------------+--------------+    | name         | email        |    +--------------+--------------+    | Fadilah Amri | john@doe.com |    | Jane Doe     | jane@doe.com |    +--------------+--------------+    2 rows in set (0.000 sec)    //Mengambil data Books    MariaDB [library]> select * from books where stock>20;    +----+----------------+-----------------------------------------------------------------------------------------+-------+-------------+    | id | title          | summary                                                                                 | stock | category_id |    +----+----------------+-----------------------------------------------------------------------------------------+-------+-------------+    |  2 | One piece      | The series focuses on Monkey D Luffy, a young man made of rubber                        |    50 |           2 |    |  3 | Laskar Pelangi | Belitung is known for its richness in tin, making it one of Indonesia's richest islands |    25 |           1 |    +----+----------------+-----------------------------------------------------------------------------------------+-------+-------------+    2 rows in set (0.001 sec)    MariaDB [library]> select * from books WHERE title LIKE "%one%";    +----+-----------+------------------------------------------------------------------+-------+-------------+    | id | title     | summary                                                          | stock | category_id |    +----+-----------+------------------------------------------------------------------+-------+-------------+    |  2 | One piece | The series focuses on Monkey D Luffy, a young man made of rubber |    50 |           2 |    +----+-----------+------------------------------------------------------------------+-------+-------------+    1 row in set (0.001 sec)    //Menampilkan data items books dengan categories    MariaDB [library]> select title, summary, stock, category_id, categories.name as category    -> FROM books    -> JOIN categories ON books.category_id = categories.id;    +----------------+---------------------------------------------------------------------------------------------------+-------+-------------+----------+    | title          | summary                                                                                           | stock | category_id | category |    +----------------+---------------------------------------------------------------------------------------------------+-------+-------------+----------+    | One piece      | The series focuses on Monkey D Luffy, a young man made of rubber                                  |    50 |           2 | manga    |    | Laskar Pelangi | Belitung is known for its richness in tin, making it one of Indonesia's richest islands           |    25 |           1 | novel    |    | Your Name      | Mitsuha Miyamizu, a high school girl living in the fictional town of Itomori in Gifu Prefecture's |    15 |           2 | manga    |    +----------------+---------------------------------------------------------------------------------------------------+-------+-------------+----------+    3 rows in set (0.000 sec)5.Mengubah Data dari Database    MariaDB [library]> select * from books;    +----+----------------+---------------------------------------------------------------------------------------------------+-------+-------------+    | id | title          | summary                                                                                           | stock | category_id |    +----+----------------+---------------------------------------------------------------------------------------------------+-------+-------------+    |  2 | One piece      | The series focuses on Monkey D Luffy, a young man made of rubber                                  |    30 |           2 |    |  3 | Laskar Pelangi | Belitung is known for its richness in tin, making it one of Indonesia's richest islands           |    25 |           1 |    |  4 | Your Name      | Mitsuha Miyamizu, a high school girl living in the fictional town of Itomori in Gifu Prefecture's |    15 |           2 |    +----+----------------+---------------------------------------------------------------------------------------------------+-------+-------------+    3 rows in set (0.002 sec)
+1.buat Database
+
+    MariaDB [(none)]> create database library;
+    MariaDB [(none)]> use library;
+
+2.create tabel user, categories, books
+
+    MariaDB [library]> CREATE TABLE users (
+        -> id INT AUTO_INCREMENT PRIMARY KEY,
+        -> name varchar(255),
+        -> email varchar(255),
+        -> password varchar(255));
+
+    MariaDB [library]> CREATE TABLE categories (
+        -> id INT AUTO_INCREMENT PRIMARY KEY,
+        -> name varchar(255));
+
+    MariaDB [library]> create table books(
+        -> id INT AUTO_INCREMENT PRIMARY KEY,
+        -> title varchar(255),
+        -> summary text,
+        -> stock int,
+        -> category_id int,
+        -> FOREIGN KEY (category_id) REFERENCES categories(id));
+
+3.memasukan data pada table
+    //tabel users
+        MariaDB [library]> insert into users (name,email,password)
+        -> values ('Fadilah Amri','john@doe.com','john123'),
+        -> ('jane doe','jane@doe.com','jenita123');   
+
+    //tabel categories
+        MariaDB [library]> insert into categories (name)
+            -> values ('novel'),
+            -> ('manga'),
+            -> ('comic'),
+            -> ('history'),
+            -> ('IT');
+
+    //tabel books
+        MariaDB [library]> insert into books (title,summary,stock,category_id)
+            -> value ('One piece', 'The series focuses on Monkey D Luffy,a young man made of rubber', 50, 2),
+            -> ('laskar pelangi', 'Belitung is known for its richness in tin, making it one of Indonesia richest islands', 25, 1),
+            -> ('your name', 'Mitsuha Miyamizu, a high school girl living in the fictional town of Itomori in Gifu Prefectures', 15, 2);
+
+4.mengambil Data dari Database
+
+    //mengambil data user KECUALI password nya
+    MariaDB [library]> select name, email from users;
+    +--------------+--------------+
+    | name         | email        |
+    +--------------+--------------+
+    | Fadilah Amri | john@doe.com |
+    | Jane Doe     | jane@doe.com |
+    +--------------+--------------+
+    2 rows in set (0.000 sec)
+
+    //Mengambil data Books
+    MariaDB [library]> select * from books where stock>20;
+    +----+----------------+-----------------------------------------------------------------------------------------+-------+-------------+
+    | id | title          | summary                                                                                 | stock | category_id |
+    +----+----------------+-----------------------------------------------------------------------------------------+-------+-------------+
+    |  2 | One piece      | The series focuses on Monkey D Luffy, a young man made of rubber                        |    50 |           2 |
+    |  3 | Laskar Pelangi | Belitung is known for its richness in tin, making it one of Indonesia's richest islands |    25 |           1 |
+    +----+----------------+-----------------------------------------------------------------------------------------+-------+-------------+
+    2 rows in set (0.001 sec)
+
+    MariaDB [library]> select * from books WHERE title LIKE "%one%";
+    +----+-----------+------------------------------------------------------------------+-------+-------------+
+    | id | title     | summary                                                          | stock | category_id |
+    +----+-----------+------------------------------------------------------------------+-------+-------------+
+    |  2 | One piece | The series focuses on Monkey D Luffy, a young man made of rubber |    50 |           2 |
+    +----+-----------+------------------------------------------------------------------+-------+-------------+
+    1 row in set (0.001 sec)
+
+    //Menampilkan data items books dengan categories
+    MariaDB [library]> select title, summary, stock, category_id, categories.name as category
+    -> FROM books
+    -> JOIN categories ON books.category_id = categories.id;
+    +----------------+---------------------------------------------------------------------------------------------------+-------+-------------+----------+
+    | title          | summary                                                                                           | stock | category_id | category |
+    +----------------+---------------------------------------------------------------------------------------------------+-------+-------------+----------+
+    | One piece      | The series focuses on Monkey D Luffy, a young man made of rubber                                  |    50 |           2 | manga    |
+    | Laskar Pelangi | Belitung is known for its richness in tin, making it one of Indonesia's richest islands           |    25 |           1 | novel    |
+    | Your Name      | Mitsuha Miyamizu, a high school girl living in the fictional town of Itomori in Gifu Prefecture's |    15 |           2 | manga    |
+    +----------------+---------------------------------------------------------------------------------------------------+-------+-------------+----------+
+    3 rows in set (0.000 sec)
+
+5.Mengubah Data dari Database
+
+    MariaDB [library]> select * from books;
+    +----+----------------+---------------------------------------------------------------------------------------------------+-------+-------------+
+    | id | title          | summary                                                                                           | stock | category_id |
+    +----+----------------+---------------------------------------------------------------------------------------------------+-------+-------------+
+    |  2 | One piece      | The series focuses on Monkey D Luffy, a young man made of rubber                                  |    30 |           2 |
+    |  3 | Laskar Pelangi | Belitung is known for its richness in tin, making it one of Indonesia's richest islands           |    25 |           1 |
+    |  4 | Your Name      | Mitsuha Miyamizu, a high school girl living in the fictional town of Itomori in Gifu Prefecture's |    15 |           2 |
+    +----+----------------+---------------------------------------------------------------------------------------------------+-------+-------------+
+    3 rows in set (0.002 sec)
