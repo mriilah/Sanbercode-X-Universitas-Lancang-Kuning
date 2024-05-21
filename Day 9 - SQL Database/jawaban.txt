@@ -1,24 +1,19 @@
 1.buat Database
 
     MariaDB [(none)]> create database library;
-
-2.select database
-
     MariaDB [(none)]> use library;
 
-3.create tabel user, categories, books
+2.create tabel user, categories, books
 
     MariaDB [library]> CREATE TABLE users (
         -> id INT AUTO_INCREMENT PRIMARY KEY,
         -> name varchar(255),
         -> email varchar(255),
         -> password varchar(255));
-    Query OK, 0 rows affected (0.011 sec)
 
     MariaDB [library]> CREATE TABLE categories (
         -> id INT AUTO_INCREMENT PRIMARY KEY,
         -> name varchar(255));
-    Query OK, 0 rows affected (0.035 sec)
 
     MariaDB [library]> create table books(
         -> id INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,7 +22,26 @@
         -> stock int,
         -> category_id int,
         -> FOREIGN KEY (category_id) REFERENCES categories(id));
-    Query OK, 0 rows affected (0.031 sec)
+
+3.memasukan data pada table
+    //tabel users
+        MariaDB [library]> insert into users (name,email,password)
+        -> values ('Fadilah Amri','john@doe.com','john123'),
+        -> ('jane doe','jane@doe.com','jenita123');   
+
+    //tabel categories
+        MariaDB [library]> insert into categories (name)
+            -> values ('novel'),
+            -> ('manga'),
+            -> ('comic'),
+            -> ('history'),
+            -> ('IT');
+
+    //tabel books
+        MariaDB [library]> insert into books (title,summary,stock,category_id)
+            -> value ('One piece', 'The series focuses on Monkey D Luffy,a young man made of rubber', 50, 2),
+            -> ('laskar pelangi', 'Belitung is known for its richness in tin, making it one of Indonesia richest islands', 25, 1),
+            -> ('your name', 'Mitsuha Miyamizu, a high school girl living in the fictional town of Itomori in Gifu Prefectures', 15, 2);
 
 4.mengambil Data dari Database
 
